@@ -39,6 +39,10 @@ export function resolveIndexable(env: EnvSource): boolean {
   );
 }
 
+export function isDevelopment(env: EnvSource): boolean {
+  return env.NODE_ENV === "development";
+}
+
 export function readToken(value: string | undefined): string | undefined {
   const token = value?.trim();
   return token ? token : undefined;
@@ -57,7 +61,7 @@ export function resolveTrustedOrigins(env: EnvSource, siteUrl: URL): string[] {
     .filter((host) => host !== undefined)
     .map((host) => `https://${host}`);
 
-  const localHosts = env.NODE_ENV === "development" ? [LOCAL_SITE_URL] : [];
+  const localHosts = isDevelopment(env) ? [LOCAL_SITE_URL] : [];
 
   const origins = [siteUrl.href, ...deploymentHosts, ...localHosts]
     .map(parseHttpOrigin)

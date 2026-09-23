@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  isDevelopment,
   parseHttpOrigin,
   readToken,
   requireEnv,
@@ -66,6 +67,15 @@ describe("resolveIndexable", () => {
         NEXT_PUBLIC_SITE_URL: "https://assessoria.com.br",
       }),
     ).toBe(false);
+  });
+});
+
+describe("isDevelopment", () => {
+  it("is true only in development", () => {
+    expect(isDevelopment({ NODE_ENV: "development" })).toBe(true);
+    expect(isDevelopment({ NODE_ENV: "production" })).toBe(false);
+    expect(isDevelopment({ NODE_ENV: "test" })).toBe(false);
+    expect(isDevelopment({})).toBe(false);
   });
 });
 

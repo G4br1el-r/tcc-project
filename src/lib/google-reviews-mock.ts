@@ -1,14 +1,5 @@
 import type { GooglePlaceReviews } from "./google-reviews";
 
-/**
- * Dados de exemplo para pré-visualizar o layout durante o desenvolvimento
- * local (ver leitura em src/app/api/reviews/route.ts). O texto aqui não
- * carrega marcação de "fictício" de propósito — serve só para avaliar a
- * composição visual. A trava contra vazamento para produção é técnica, não
- * textual: só ativa com `REVIEWS_MOCK=true` em `NODE_ENV=development`, e
- * `REVIEWS_MOCK` nunca deve ser cadastrada na Vercel.
- */
-
 const FICTITIOUS_AVATAR = null;
 const FICTITIOUS_URL = null;
 

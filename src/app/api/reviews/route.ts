@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { connection } from "next/server";
-import { readToken } from "@/lib/env";
+import { isDevelopment, readToken } from "@/lib/env";
 import {
   buildPlaceDetailsRequest,
   type GooglePlaceReviews as GooglePlaceReviewsResponse,
@@ -28,12 +28,6 @@ function unavailable(): Response {
     status: SERVICE_UNAVAILABLE_STATUS,
     headers: NO_STORE_HEADERS,
   });
-}
-
-function readMockOverride(): GooglePlaceReviewsResponse | null {
-  if (process.env.NODE_ENV !== "development") return null;
-  if (readToken(process.env.REVIEWS_MOCK) !== "true") return null;
-  return MOCK_REVIEWS_PLACE;
 }
 
 async function fetchPlaceReviews(
@@ -81,8 +75,9 @@ const SUCCESS_HEADERS = REVIEWS_CACHE_ENABLED
 export async function GET(): Promise<Response> {
   await connection();
 
-  const mock = readMockOverride();
-  if (mock) return Response.json(mock, { headers: NO_STORE_HEADERS });
+  if (isDevelopment(process.env)) {
+    return Response.json(MOCK_REVIEWS_PLACE, { headers: NO_STORE_HEADERS });
+  }
 
   const placeId = readToken(process.env.GOOGLE_PLACE_ID);
   const hasApiKey = readToken(process.env.GOOGLE_PLACES_API_KEY) !== undefined;
