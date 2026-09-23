@@ -16,7 +16,7 @@ import {
   VISIBLE,
 } from "@/lib/motion";
 
-const DESKTOP_PIN_DISTANCE = "+=320%";
+const DESKTOP_PIN_DISTANCE = "+=560%";
 const MOBILE_PIN_DISTANCE = "+=240%";
 
 const WORDS_TOTAL_DURATION = 4.2;
@@ -39,8 +39,12 @@ const TITLE_EXIT_DURATION = 0.8;
 const ORDER_ENTRY_OFFSET = 40;
 const ORDER_IN_DURATION = 0.8;
 const STEP_STAGGER = 0.18;
-const LINE_DURATION = 1.1;
-const HOLD_DURATION = 0.8;
+const HEADING_IN_DURATION = 1.2;
+const HEADING_STAGGER = 0.6;
+const FLOW_PAUSE = 0.5;
+const STEP_INTERVAL = 1.3;
+const STEP_IN_DURATION = 1;
+const HOLD_DURATION = 1.5;
 const HALF = 0.5;
 
 const MOBILE_REVEAL_START = "top 80%";
@@ -227,23 +231,24 @@ export function ChaosToOrderMotion({ children }: { children: ReactNode }) {
               {
                 opacity: VISIBLE,
                 y: NO_OFFSET,
-                duration: ORDER_IN_DURATION,
-                stagger: STEP_STAGGER,
+                duration: HEADING_IN_DURATION,
+                stagger: HEADING_STAGGER,
                 ease: EASE.out,
               },
               `order+=${TITLE_EXIT_DURATION * HALF}`,
             )
+            .addLabel("flow", `>+=${FLOW_PAUSE}`)
             .fromTo(
               line,
               { autoAlpha: HIDDEN },
               { autoAlpha: VISIBLE, duration: ORDER_IN_DURATION },
-              "<",
+              "flow",
             )
             .fromTo(
               fill,
               { scaleX: HIDDEN },
-              { scaleX: VISIBLE, duration: LINE_DURATION },
-              "<",
+              { scaleX: VISIBLE, duration: STEP_INTERVAL * steps.length },
+              "flow",
             )
             .fromTo(
               steps,
@@ -251,11 +256,11 @@ export function ChaosToOrderMotion({ children }: { children: ReactNode }) {
               {
                 opacity: VISIBLE,
                 y: NO_OFFSET,
-                duration: ORDER_IN_DURATION,
-                stagger: STEP_STAGGER,
+                duration: STEP_IN_DURATION,
+                stagger: STEP_INTERVAL,
                 ease: EASE.out,
               },
-              "<",
+              "flow",
             )
             .to({}, { duration: HOLD_DURATION });
         },

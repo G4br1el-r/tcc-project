@@ -87,11 +87,8 @@ describe("buildVerification", () => {
     expect(buildVerification({})).toBeUndefined();
   });
 
-  it("maps google and bing tokens", () => {
-    expect(buildVerification({ google: "g", bing: "b" })).toEqual({
-      google: "g",
-      other: { "msvalidate.01": "b" },
-    });
+  it("maps the google token", () => {
+    expect(buildVerification({ google: "g" })).toEqual({ google: "g" });
   });
 });
 

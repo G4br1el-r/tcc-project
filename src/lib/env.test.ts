@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   parseHttpOrigin,
   readToken,
+  requireEnv,
   resolveIndexable,
   resolveSiteUrl,
+  resolveTrustedOrigins,
 } from "./env";
 
 describe("parseHttpOrigin", () => {
@@ -72,5 +74,54 @@ describe("readToken", () => {
     expect(readToken("  abc ")).toBe("abc");
     expect(readToken("  ")).toBeUndefined();
     expect(readToken(undefined)).toBeUndefined();
+  });
+});
+
+describe("requireEnv", () => {
+  it("returns the trimmed value", () => {
+    expect(requireEnv({ SECRET: "  valor " }, "SECRET")).toBe("valor");
+  });
+
+  it("throws naming the missing variable", () => {
+    expect(() => requireEnv({ SECRET: "   " }, "SECRET")).toThrow(/SECRET/);
+    expect(() => requireEnv({}, "OUTRA")).toThrow(/OUTRA/);
+  });
+});
+
+describe("resolveTrustedOrigins", () => {
+  const siteUrl = new URL("https://assessoria.com.br/");
+
+  it("includes the site origin and Vercel deployment hosts", () => {
+    expect(
+      resolveTrustedOrigins(
+        {
+          VERCEL_URL: "projeto-abc.vercel.app",
+          VERCEL_BRANCH_URL: "projeto-git-main.vercel.app",
+        },
+        siteUrl,
+      ),
+    ).toEqual([
+      "https://assessoria.com.br",
+      "https://projeto-abc.vercel.app",
+      "https://projeto-git-main.vercel.app",
+    ]);
+  });
+
+  it("trusts localhost only in development", () => {
+    expect(resolveTrustedOrigins({ NODE_ENV: "development" }, siteUrl)).toEqual(
+      ["https://assessoria.com.br", "http://localhost:3000"],
+    );
+    expect(resolveTrustedOrigins({ NODE_ENV: "production" }, siteUrl)).toEqual([
+      "https://assessoria.com.br",
+    ]);
+  });
+
+  it("ignores blanks and removes duplicates", () => {
+    expect(
+      resolveTrustedOrigins(
+        { VERCEL_URL: "assessoria.com.br", VERCEL_BRANCH_URL: "  " },
+        siteUrl,
+      ),
+    ).toEqual(["https://assessoria.com.br"]);
   });
 });

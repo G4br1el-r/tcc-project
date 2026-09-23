@@ -21,14 +21,14 @@ const RULE_WIDTH = 120;
 const RULE_HEIGHT = 2;
 const FONT_WEIGHT = 400;
 
-export async function renderOgImage(): Promise<ImageResponse> {
-  const [font, monogram] = await Promise.all([
-    readFile(
-      join(process.cwd(), "src/assets/fonts/bricolage-grotesque-latin.woff"),
-    ),
-    readFile(join(process.cwd(), "public/brand/monogram.png"), "base64"),
-  ]);
+const [font, monogram] = await Promise.all([
+  readFile(
+    join(process.cwd(), "src/assets/fonts/bricolage-grotesque-latin.woff"),
+  ),
+  readFile(join(process.cwd(), "public/brand/monogram.png"), "base64"),
+]);
 
+export function renderOgImage(): ImageResponse {
   return new ImageResponse(
     <div
       style={{

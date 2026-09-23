@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { Service } from "@/content/landing";
 import {
-  bingSiteVerification,
   CONTENT_LAST_UPDATED,
   googleSiteVerification,
   isIndexable,
@@ -19,17 +18,13 @@ const BRAND_LOGO_PATH = "/brand/monogram.png";
 
 export const DEFAULT_TITLE = `${SITE_TITLE} | ${SITE_NAME}`;
 
-type VerificationTokens = { google?: string; bing?: string };
+type VerificationTokens = { google?: string };
 
 export function buildVerification({
   google,
-  bing,
 }: VerificationTokens): Metadata["verification"] {
-  if (!google && !bing) return undefined;
-  return {
-    ...(google ? { google } : {}),
-    ...(bing ? { other: { "msvalidate.01": bing } } : {}),
-  };
+  if (!google) return undefined;
+  return { google };
 }
 
 export function buildRobots(indexable: boolean): Metadata["robots"] {
@@ -80,10 +75,7 @@ export function buildRootMetadata(): Metadata {
       description: SITE_DESCRIPTION,
     },
     robots: buildRobots(isIndexable),
-    verification: buildVerification({
-      google: googleSiteVerification,
-      bing: bingSiteVerification,
-    }),
+    verification: buildVerification({ google: googleSiteVerification }),
   };
 }
 

@@ -1,12 +1,26 @@
+import { cacheLife } from "next/cache";
+import Image from "next/image";
 import { FOOTER, NAV_LINKS } from "@/content/landing";
-import { PHOTOS } from "@/content/media";
 import { SITE_NAME } from "@/lib/site";
+import {
+  FIVE_MINUTES_IN_SECONDS,
+  ONE_DAY_IN_SECONDS,
+  ONE_YEAR_IN_SECONDS,
+} from "@/lib/time";
 
-const photoCredits = Object.values(PHOTOS).map((photo) => photo.credit);
+const DEVELOPER_LOGO_SIZE = 64;
+
+async function CurrentYear() {
+  "use cache";
+  cacheLife({
+    stale: FIVE_MINUTES_IN_SECONDS,
+    revalidate: ONE_DAY_IN_SECONDS,
+    expire: ONE_YEAR_IN_SECONDS,
+  });
+  return new Date().getFullYear();
+}
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="site-footer">
       <div className="shell">
@@ -32,25 +46,19 @@ export function Footer() {
 
         <div className="site-footer__legal">
           <p>
-            © {year} {SITE_NAME}
+            © <CurrentYear /> {SITE_NAME}
           </p>
-          <div className="site-footer__credits">
-            <span>Fotos de</span>
-            <ul>
-              {photoCredits.map((credit) => (
-                <li key={credit.url}>
-                  <a
-                    href={credit.url}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {credit.author}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <span>no Unsplash</span>
-          </div>
+          <p className="site-footer__developer">
+            <span>{FOOTER.developedBy}</span>
+            <Image
+              src="/brand/nsqnp.webp"
+              alt="NSQNP"
+              width={DEVELOPER_LOGO_SIZE}
+              height={DEVELOPER_LOGO_SIZE}
+              className="site-footer__developer-logo"
+            />
+            <span>{FOOTER.developerPhone}</span>
+          </p>
         </div>
       </div>
     </footer>

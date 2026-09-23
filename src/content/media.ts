@@ -3,10 +3,12 @@ export type Photo = {
   alt: string;
   width: number;
   height: number;
-  credit: { author: string; url: string };
+  credit?: { author: string; url: string };
 };
 
 const UNSPLASH_PARAMS = "auto=format&fit=max&w=2400&q=85";
+const AUTHORIAL_WIDTH = 1672;
+const AUTHORIAL_HEIGHT = 941;
 
 export const PHOTOS = {
   hero: {
@@ -20,43 +22,27 @@ export const PHOTOS = {
     },
   },
   shelves: {
-    src: `https://images.unsplash.com/photo-1680449786212-de3b835dc467?${UNSPLASH_PARAMS}`,
-    alt: "Estante de biblioteca cheia de livros, em sombra.",
-    width: 6000,
-    height: 4000,
-    credit: {
-      author: "Spencer Scott Pugh",
-      url: "https://unsplash.com/photos/CyMGg5QoyLw",
-    },
+    src: "/image/image-4.webp",
+    alt: "Livros acadêmicos lado a lado, com marcadores coloridos entre as páginas, iluminados de lado na penumbra.",
+    width: AUTHORIAL_WIDTH,
+    height: AUTHORIAL_HEIGHT,
   },
   before: {
-    src: `https://images.unsplash.com/photo-1630561535290-24c621d6b463?${UNSPLASH_PARAMS}&sat=-40&exp=-12`,
-    alt: "Mesa tomada por pilhas de papéis e pastas desorganizadas.",
-    width: 5184,
-    height: 3456,
-    credit: {
-      author: "Nick Sorockin",
-      url: "https://unsplash.com/photos/VjyKHF6k0yQ",
-    },
+    src: "/image/image-2.webp",
+    alt: "Mesa de estudos à noite tomada por pilhas de livros, papéis soltos, post-its, bolas de papel amassado e uma caneca de café.",
+    width: AUTHORIAL_WIDTH,
+    height: AUTHORIAL_HEIGHT,
   },
   after: {
-    src: `https://images.unsplash.com/photo-1582319193453-d841c7a5e586?${UNSPLASH_PARAMS}`,
-    alt: "Caderno fechado e uma caneta sobre uma mesa limpa e organizada.",
-    width: 5760,
-    height: 3840,
-    credit: {
-      author: "Markus Spiske",
-      url: "https://unsplash.com/photos/RiSAjGsa0vg",
-    },
+    src: "/image/image-3.webp",
+    alt: "A mesma mesa organizada: um trabalho encadernado no centro, uma caneta ao lado e dois livros alinhados, sob a luz da luminária.",
+    width: AUTHORIAL_WIDTH,
+    height: AUTHORIAL_HEIGHT,
   },
   library: {
-    src: `https://images.unsplash.com/photo-1704391904759-11e28009335d?${UNSPLASH_PARAMS}`,
-    alt: "Biblioteca antiga com estantes de madeira e um lustre aceso.",
-    width: 6000,
-    height: 4000,
-    credit: {
-      author: "Jonathan Gong",
-      url: "https://unsplash.com/photos/A32Uo8lf-JE",
-    },
+    src: "/image/image-5.webp",
+    alt: "Escritório escuro à noite com a mesa vazia e um trabalho encadernado sob a única luminária acesa.",
+    width: AUTHORIAL_WIDTH,
+    height: AUTHORIAL_HEIGHT,
   },
 } as const satisfies Record<string, Photo>;

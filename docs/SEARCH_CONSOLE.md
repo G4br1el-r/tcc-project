@@ -15,7 +15,6 @@ O Google decide quando e se uma URL será indexada. Os passos abaixo preparam o 
 1. Acesse [search.google.com/search-console](https://search.google.com/search-console) e adicione a propriedade.
    - **Domínio** (recomendado): verificação por registro TXT no DNS.
    - **Prefixo de URL**: use a tag HTML. Copie só o valor de `content` e coloque em `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`; faça novo deploy e clique em Verificar.
-2. Para o Bing, repita com `NEXT_PUBLIC_BING_SITE_VERIFICATION` (Bing Webmaster Tools aceita importar do Search Console).
 
 ## 3. Enviar o sitemap
 

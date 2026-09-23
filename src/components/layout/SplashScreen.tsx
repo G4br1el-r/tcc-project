@@ -17,7 +17,7 @@ export function SplashScreen() {
         <div className="splash__mark">
           <span className="splash__logo-mask">
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt=""
               width={LOGO_SIZE}
               height={LOGO_SIZE}

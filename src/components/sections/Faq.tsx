@@ -1,9 +1,12 @@
 import { WhatsAppLink } from "@/components/ui/WhatsAppLink";
 import { FAQ } from "@/content/landing";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
+import { getPublishedFaq } from "@/lib/faq";
 import { WHATSAPP_MESSAGES } from "@/lib/whatsapp";
 
-export function Faq() {
+export async function Faq() {
+  const items = await getPublishedFaq();
+
   return (
     <section
       id="duvidas"
@@ -27,7 +30,7 @@ export function Faq() {
 
         <div className="chapter__body" data-chapter-body>
           <div className="faq__list" data-reveal-group>
-            {FAQ.items.map((item) => (
+            {items.map((item) => (
               <details
                 key={item.id}
                 className="faq__item"

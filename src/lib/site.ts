@@ -12,13 +12,16 @@ export const CONTENT_LAST_UPDATED = "2026-09-23";
 
 export const THEME_COLOR = "#000000";
 
+export const BRAND_MONOGRAM = {
+  src: "/brand/monogram.png",
+  width: 209,
+  height: 256,
+} as const;
+
 export const siteUrl = resolveSiteUrl(runtimeEnv);
 export const isIndexable = resolveIndexable(runtimeEnv);
 export const googleSiteVerification = readToken(
   runtimeEnv.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-);
-export const bingSiteVerification = readToken(
-  runtimeEnv.NEXT_PUBLIC_BING_SITE_VERIFICATION,
 );
 
 export function absoluteUrl(path: string, base: URL = siteUrl): string {

@@ -2,11 +2,8 @@ import Image from "next/image";
 import { WhatsAppLink } from "@/components/ui/WhatsAppLink";
 import { NAV_LINKS } from "@/content/landing";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
-import { SITE_NAME } from "@/lib/site";
+import { BRAND_MONOGRAM, SITE_NAME } from "@/lib/site";
 import { WHATSAPP_MESSAGES } from "@/lib/whatsapp";
-
-const MONOGRAM_WIDTH = 209;
-const MONOGRAM_HEIGHT = 256;
 
 export function Header() {
   return (
@@ -14,10 +11,10 @@ export function Header() {
       <div className="shell site-header__inner">
         <a href="/" className="brand" aria-label={`${SITE_NAME}, início`}>
           <Image
-            src="/brand/monogram.png"
+            src={BRAND_MONOGRAM.src}
             alt=""
-            width={MONOGRAM_WIDTH}
-            height={MONOGRAM_HEIGHT}
+            width={BRAND_MONOGRAM.width}
+            height={BRAND_MONOGRAM.height}
             className="brand__mark"
             loading="eager"
           />

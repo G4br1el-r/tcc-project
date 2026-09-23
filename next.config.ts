@@ -12,6 +12,7 @@ const SECURITY_HEADERS = [
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  cacheComponents: true,
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
