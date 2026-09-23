@@ -16,18 +16,14 @@ import {
 const REVIEWS_CACHE_ENABLED = true;
 const REVIEWS_CACHE_TAG = "google-reviews";
 const REQUEST_TIMEOUT_MS = 5000;
-const SERVICE_UNAVAILABLE_STATUS = 503;
 const NO_REVIEWS = 0;
 const NO_STORE_HEADERS = { "Cache-Control": "no-store" };
 const CDN_CACHE_HEADERS = {
   "Cache-Control": `public, s-maxage=${SIX_HOURS_IN_SECONDS}, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
 };
 
-function unavailable(): Response {
-  return new Response(null, {
-    status: SERVICE_UNAVAILABLE_STATUS,
-    headers: NO_STORE_HEADERS,
-  });
+function sampleReviews(): Response {
+  return Response.json(MOCK_REVIEWS_PLACE, { headers: NO_STORE_HEADERS });
 }
 
 async function fetchPlaceReviews(
@@ -75,13 +71,11 @@ const SUCCESS_HEADERS = REVIEWS_CACHE_ENABLED
 export async function GET(): Promise<Response> {
   await connection();
 
-  if (isDevelopment(process.env)) {
-    return Response.json(MOCK_REVIEWS_PLACE, { headers: NO_STORE_HEADERS });
-  }
+  if (isDevelopment(process.env)) return sampleReviews();
 
   const placeId = readToken(process.env.GOOGLE_PLACE_ID);
   const hasApiKey = readToken(process.env.GOOGLE_PLACES_API_KEY) !== undefined;
-  if (!placeId || !hasApiKey) return unavailable();
+  if (!placeId || !hasApiKey) return sampleReviews();
 
   try {
     const place = await loadPlaceReviews(placeId);
@@ -91,6 +85,6 @@ export async function GET(): Promise<Response> {
       "Falha ao consultar o Google Places:",
       error instanceof Error ? error.message : error,
     );
-    return unavailable();
+    return sampleReviews();
   }
 }

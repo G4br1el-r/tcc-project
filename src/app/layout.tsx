@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={SITE_LANGUAGE}
-      className={`${display.variable} ${body.variable}`}
+      className={`dark ${display.variable} ${body.variable}`}
       suppressHydrationWarning
     >
       <head>

@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --black: #000000;
@@ -11,6 +15,7 @@
   --accent: #a9e8d8;
   --accent-ink: #0b1f1a;
   --danger: #ff9b8f;
+  --danger-strong: #dc2626;
 
   --gutter: clamp(1.25rem, 5vw, 5rem);
   --column-gap: clamp(1rem, 2vw, 2rem);
@@ -39,6 +44,21 @@
   --color-accent: var(--accent);
   --font-display: var(--font-display), "Helvetica Neue", Arial, sans-serif;
   --font-body: var(--font-body), "Helvetica Neue", Arial, sans-serif;
+  --font-heading: var(--font-display), "Helvetica Neue", Arial, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 }
 
 @layer base {
@@ -98,6 +118,29 @@
 
   main:focus {
     outline: none;
+  }
+
+  :where([data-slot]) {
+    --background: var(--black);
+    --foreground: var(--white);
+    --popover: var(--surface);
+    --popover-foreground: var(--white);
+    --primary: var(--white);
+    --primary-foreground: var(--black);
+    --secondary: var(--surface-raised);
+    --secondary-foreground: var(--white);
+    --muted: var(--surface-raised);
+    --muted-foreground: var(--faint);
+    --accent: var(--surface-raised);
+    --accent-foreground: var(--white);
+    --destructive: var(--danger-strong);
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--faint);
+  }
+
+  :where([data-slot], [data-slot] *) {
+    border-color: var(--border);
   }
 }
 
